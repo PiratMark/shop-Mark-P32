@@ -6,6 +6,8 @@
 //Глобальны масивы 
 int size = 10;
 int receiptSize = 1;
+double cash = 35376.00;
+double cashIncome = 0, cardIncome = 0, totalIncome = 0;
 int* idArr = new int[size];
 
 std::string* nameArr = new std::string[size];
@@ -37,6 +39,7 @@ void AddToStorage();
 void ChangeStorage();
 void AddElementToEnd();
 void DeleteElementByIndex();
+void CashStatus();
 
 int main()
 {
@@ -76,7 +79,7 @@ void Start()
 	{
 		std::cout << "Введите логин: ";
 		std::getline(std::cin, login);
-		std::cout << "Введите пароль: ";
+		std::cout << " Введите пароль: ";
 		std::getline(std::cin, password);
 
 		if (login != adminLogin || password != adminPassword)
@@ -96,7 +99,7 @@ void Start()
 			int chooseStorageType;
 			do
 			{
-				std::cout << "Введите формат склада: \n 1 - готовый склад\n 2 - создать склад вручную\n";
+				std::cout << "Введите формат склада: \n1 - готовый склад\n2 - создать склад вручную\n";
 				std::cin >> chooseStorageType;
 			} while (chooseStorageType < 1 || chooseStorageType > 2);
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -173,6 +176,7 @@ void Shop()
 			std::cout << "4 - Списать товар\n";
 			std::cout << "5 - Пополнить товар\n";
 			std::cout << "6 - Изменить склад\n";
+			std::cout << "7 - Показать кассу\n";
 			std::cout << "0 - Закончить смену\n";
 			std::cin >> choose;
 		} while (choose < 0 || choose > 6);
@@ -199,12 +203,11 @@ void Shop()
 		}
 		else if (choose == 6)
 		{
-
-
+			ChangeStorage();
 		}
-		else if (choose == 6)
+		else if (choose == 7)
 		{
-
+			
 		}
 		else if (choose == 0)
 		{
@@ -328,10 +331,25 @@ void Selling()
 		while (true);
 		{
 			PrintReceipt();
-
-
 		}
-
+		//скидки сделай сука ленивая >:( 
+		int pay = 0;
+		std::cout << "\n\n\n";
+		do
+		{
+			std::cout << "1 - Наличные\n2 - Оплата картой\n\n";
+			std::cin >> pay;
+		} while (pay < 1 || pay > 2);
+		if (pay == 1)
+		{
+			cash += totalSum;
+			cashIncome += totalSum;
+		}
+		else if (pay == 2)
+		{
+			cardIncome += totalSum;
+		}
+		
 
 	}
 }
@@ -412,11 +430,11 @@ void ChangeStorage()
 	} while (choose < 0 || choose > 2);
 	if (choose == 1)
 	{
-
+		AddElementToEnd();
 	}
 	else if (choose == 2)
 	{
-
+		DeleteElementByIndex();
 	}
 	else
 	{
@@ -494,11 +512,6 @@ void DeleteElementByIndex()
 		CountArr[i] = CountArrTemp[i];
 		priceArr[i] = priceArrTemp[i];
 	}
-	
-	delete[]idArr;
-	delete[]nameArr;
-	delete[]CountArr;
-	delete[]priceArr;
 
 	size--;
 	idArr = new int[size];
@@ -512,10 +525,37 @@ void DeleteElementByIndex()
 		std::cin >> index;
 	} while (index < 1 || index > size);
 	
-	for (int i = 0; i < size; i++)
+	for (int i = 0, j = 0; i < index, j < index; i++, j++)
 	{
-		
+		if (i == index - 1)
+		{
+			i++;
+			idArr[j] = idArrTemp[j];
+			nameArr[j] = nameArrTemp[i];
+			CountArr[j] = CountArrTemp[i];
+			priceArr[j] = priceArrTemp[i];
+		}
+		else
+		{
+			idArr[j] = idArrTemp[j];
+			nameArr[j] = nameArrTemp[i];
+			CountArr[j] = CountArrTemp[i];
+			priceArr[j] = priceArrTemp[i];
+		}
 	}
+	delete[]idArr;
+	delete[]nameArr;
+	delete[]CountArr;
+	delete[]priceArr;
+}
+
+void CashStatus()
+{
+	totalIncome = cashIncome + cardIncome;
+	std::cout << "Наличные в кассе: " << cash << "\nВыручка за наличные: "
+	<< cashIncome << "\nВыручка по безналу: "
+	<< cardIncome << "\n\nИтоговая выручка за смену: "
+	<< totalIncome << "\n\n";
 }
 
 template<typename Arr>
