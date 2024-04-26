@@ -62,8 +62,8 @@ void ShowStorage()
 	std::cout << "ID\tНазвание товара\t\t\t\tКол-во\tЦена\n";
 	for (int i = 0; i < size; i++)
 	{
-		std::cout << idArr[i] << " " << nameArr[i] << "\t" <<
-			CountArr[i] << "\t" << priceArr[i] << "\n";
+		std::cout << idArr[i] + 1 << " " << nameArr[i] << "\t" <<
+			CountArr[i] << "\t"  << priceArr[i] << "\n";
 	}
 }
 
