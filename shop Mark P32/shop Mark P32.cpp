@@ -207,10 +207,11 @@ void Shop()
 		}
 		else if (choose == 7)
 		{
-			
+			CashStatus();
 		}
 		else if (choose == 0)
 		{
+			CashStatus();
 			break;
 		}
 		else
@@ -440,7 +441,7 @@ void ChangeStorage()
 	{
 		std::cout << "Выход";
 	}
-
+	
 
 
 }
