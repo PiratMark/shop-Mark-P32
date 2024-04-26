@@ -179,7 +179,7 @@ void Shop()
 			std::cout << "7 - Показать кассу\n";
 			std::cout << "0 - Закончить смену\n";
 			std::cin >> choose;
-		} while (choose < 0 || choose > 6);
+		} while (choose < 0 || choose > 7);
 
 		if (choose == 1)
 		{
